@@ -5,6 +5,7 @@ A simple script to return the number of proposals each author has posted from th
 ## Requirements
 
 python >=3.10.13
+
 [optional] [rye](https://github.com/mitsuhiko/rye) >= 0.16.0
 
 Your [Snapshot API key](https://docs.snapshot.org/tools/api/api-keys) also needs to be added to a `.env` file. Simply:
