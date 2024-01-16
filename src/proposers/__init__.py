@@ -6,6 +6,7 @@ from typing import Any
 from dotenv import load_dotenv
 from graphql import DocumentNode
 from gql import dsl, Client
+from gql.client import ReconnectingAsyncClientSession
 from gql.transport.aiohttp import AIOHTTPTransport
 
 
@@ -38,7 +39,16 @@ def proposers_query(
     return dsl.dsl_gql(query)
 
 
-async def get_proposals_from_space(space_name: str, proposal_author: str = ""):
+async def setup_query(
+        gql_client: Client, space_name: str, proposal_author: str
+) -> tuple[ReconnectingAsyncClientSession, DocumentNode]:
+    session = await gql_client.connect_async(reconnecting=True)
+    ds = dsl.DSLSchema(gql_client.schema)
+
+    return (session, proposers_query(ds, space_name, proposal_author))
+
+
+def setup_client() -> Client:
     load_dotenv()
 
     headers = {"x-api-key": getenv("SNAPSHOT_API")}
@@ -48,11 +58,13 @@ async def get_proposals_from_space(space_name: str, proposal_author: str = ""):
         timeout=120
     )
 
-    client = Client(transport=transport, fetch_schema_from_transport=True)
+    return Client(transport=transport, fetch_schema_from_transport=True)
 
-    session = await client.connect_async(reconnecting=True)
-    ds = dsl.DSLSchema(client.schema)
-    query = proposers_query(ds, space_name, proposal_author)
+
+async def get_proposals_from_space(space_name: str, proposal_author: str = ""):
+    client = setup_client()
+
+    session, query = await setup_query(client, space_name, proposal_author)
 
     response = await session.execute(query)
     await client.close_async()
