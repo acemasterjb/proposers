@@ -33,7 +33,7 @@ without rye installed:
 ```console
 $ pip install -r ./requirements-dev.lock
 ...
-$ python ./src/proposers/__init__.py -m hop_proposers_stats
+$ python ./src/proposers/__init__.py -m proposers_stats
 Enter the space name: hop.eth
 { '0xDeAdBeEF': 1}
 ```

@@ -12,7 +12,7 @@ requires-python = ">= 3.10.13"
 
 [project.scripts]
 hello = "proposers:hello"
-stats = "proposers:hop_proposers_stats"
+stats = "proposers:proposers_stats"
 
 [build-system]
 requires = ["hatchling"]

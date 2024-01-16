@@ -83,7 +83,7 @@ def get_proposal_statistics_for(space_name: str) -> dict[str, int]:
     }
 
 
-def hop_proposers_stats() -> dict[str, int]:
+def proposers_stats() -> dict[str, int]:
     space = input("Enter the space name: ")
     stats = get_proposal_statistics_for(space)
 
@@ -93,7 +93,7 @@ def hop_proposers_stats() -> dict[str, int]:
 
 
 if __name__ == "__main__":
-    hop_proposers_stats()
+    proposers_stats()
 
 
 def hello():
