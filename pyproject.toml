@@ -1,0 +1,35 @@
+[project]
+name = "proposers"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "takeabreath", email = "azorahai@disroot.org" }
+]
+dependencies = [
+]
+readme = "README.md"
+requires-python = ">= 3.10.13"
+
+[project.scripts]
+hello = "proposers:hello"
+stats = "proposers:hop_proposers_stats"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "aiohttp>=3.9.1",
+    "gql>=3.5.0",
+    "httpx>=0.26.0",
+    "python-dotenv>=1.0.0",
+    "black>=23.12.1",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/proposers"]
